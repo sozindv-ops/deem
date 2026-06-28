@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>АвтоОсмотр — помощник при проверке автомобиля</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f0f4f8;color:#1a202c;min-height:100vh}
+.header{background:linear-gradient(135deg,#1a365d 0%,#2b6cb0 100%);color:#fff;padding:20px 24px;box-shadow:0 2px 12px rgba(0,0,0,.2)}
+.header h1{font-size:1.5rem;font-weight:700;letter-spacing:-.5px}
+.header p{font-size:.85rem;opacity:.8;margin-top:4px}
+.container{max-width:900px;margin:0 auto;padding:24px 16px}
+.card{background:#fff;border-radius:16px;padding:24px;box-shadow:0 2px 16px rgba(0,0,0,.07);margin-bottom:20px}
+.card-title{font-size:1.1rem;font-weight:700;color:#1a365d;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.card-title .icon{width:32px;height:32px;border-radius:8px;background:#ebf4ff;display:flex;align-items:center;justify-content:center;font-size:1rem}
+.step-indicator{display:flex;gap:8px;margin-bottom:24px}
+.step{flex:1;height:4px;border-radius:2px;background:#e2e8f0;transition:background .3s}
+.step.active{background:#3182ce}
+.step.done{background:#48bb78}
+.select-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+@media(max-width:600px){.select-row{grid-template-columns:1fr}}
+.form-group{display:flex;flex-direction:column;gap:6px}
+.form-group label{font-size:.8rem;font-weight:600;color:#4a5568;text-transform:uppercase;letter-spacing:.5px}
+select,input[type=number]{width:100%;padding:12px 14px;border:2px solid #e2e8f0;border-radius:10px;font-size:.95rem;color:#1a202c;background:#fff;appearance:none;cursor:pointer;transition:border-color .2s}
+select:focus,input[type=number]:focus{outline:none;border-color:#3182ce;box-shadow:0 0 0 3px rgba(49,130,206,.15)}
+select:disabled{background:#f7fafc;color:#a0aec0;cursor:not-allowed}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 24px;border:none;border-radius:10px;font-size:.95rem;font-weight:600;cursor:pointer;transition:all .2s}
+.btn-primary{background:linear-gradient(135deg,#3182ce,#2b6cb0);color:#fff;width:100%}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(49,130,206,.4)}
+.btn-primary:disabled{background:#a0aec0;transform:none;box-shadow:none;cursor:not-allowed}
+.btn-secondary{background:#edf2f7;color:#4a5568}
+.btn-secondary:hover{background:#e2e8f0}
+.mileage-row{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:end;margin-bottom:16px}
+.tabs{display:flex;border-bottom:2px solid #e2e8f0;margin-bottom:20px;overflow-x:auto}
+.tab{padding:10px 18px;font-size:.9rem;font-weight:600;color:#718096;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;white-space:nowrap;transition:all .2s}
+.tab.active{color:#3182ce;border-bottom-color:#3182ce}
+.tab:hover:not(.active){color:#4a5568}
+.problem-item{display:flex;gap:12px;padding:14px;border-radius:10px;margin-bottom:10px;border-left:4px solid transparent}
+.problem-item.high{background:#fff5f5;border-left-color:#fc8181}
+.problem-item.medium{background:#fffaf0;border-left-color:#f6ad55}
+.problem-item.low{background:#f0fff4;border-left-color:#68d391}
+.problem-badge{flex-shrink:0;padding:3px 8px;border-radius:20px;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;height:fit-content;margin-top:2px}
+.badge-high{background:#fc8181;color:#fff}
+.badge-medium{background:#f6ad55;color:#fff}
+.badge-low{background:#68d391;color:#fff}
+.problem-text{font-size:.9rem;font-weight:600;color:#2d3748}
+.problem-detail{font-size:.82rem;color:#718096;margin-top:4px;line-height:1.5}
+.checklist-section{margin-bottom:20px}
+.checklist-section h3{font-size:.9rem;font-weight:700;color:#4a5568;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid #e2e8f0}
+.check-item{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid #f7fafc;cursor:pointer}
+.check-item:last-child{border-bottom:none}
+.check-box{width:20px;height:20px;border:2px solid #cbd5e0;border-radius:5px;flex-shrink:0;display:flex;align-items:center;justify-content:center;margin-top:1px;transition:all .2s}
+.check-box.checked{background:#48bb78;border-color:#48bb78}
+.check-box.checked::after{content:'✓';color:#fff;font-size:.75rem;font-weight:700}
+.check-item.attention .check-box{border-color:#f6ad55}
+.check-item.attention .check-text{color:#c05621;font-weight:600}
+.check-text{font-size:.88rem;color:#2d3748;line-height:1.4}
+.check-note{font-size:.78rem;color:#e53e3e;margin-top:2px;font-style:italic}
+.paint-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
+.paint-zone{background:#f7fafc;border-radius:12px;padding:16px;text-align:center;border:2px solid #e2e8f0}
+.paint-zone-name{font-size:.8rem;font-weight:600;color:#4a5568;margin-bottom:8px;text-transform:uppercase;letter-spacing:.3px}
+.paint-value{font-size:1.4rem;font-weight:800;color:#2b6cb0}
+.paint-unit{font-size:.75rem;color:#718096;margin-top:2px}
+.paint-note{font-size:.75rem;color:#718096;margin-top:12px;padding:10px;background:#ebf4ff;border-radius:8px;line-height:1.5}
+.paint-input-row{display:flex;gap:10px;align-items:center;margin-bottom:16px;flex-wrap:wrap}
+.paint-input-row input{width:120px;padding:10px 12px;border:2px solid #e2e8f0;border-radius:8px;font-size:.95rem}
+.paint-result{display:flex;align-items:center;gap:8px;padding:10px 14px;border-radius:8px;font-size:.88rem;font-weight:600}
+.result-ok{background:#f0fff4;color:#276749}
+.result-warn{background:#fffaf0;color:#c05621}
+.result-bad{background:#fff5f5;color:#c53030}
+.maint-item{display:flex;gap:12px;padding:14px;border-radius:10px;margin-bottom:10px}
+.maint-item.upcoming{background:#ebf4ff;border-left:4px solid #3182ce}
+.maint-item.current{background:#f0fff4;border-left:4px solid #48bb78}
+.maint-item.overdue{background:#fff5f5;border-left:4px solid #fc8181}
+.maint-mileage{font-size:1.1rem;font-weight:800;color:#2b6cb0;flex-shrink:0;min-width:70px}
+.maint-tasks{font-size:.85rem;color:#4a5568;line-height:1.7}
+.maint-tasks li{margin-left:16px}
+.progress-bar{height:8px;background:#e2e8f0;border-radius:4px;margin-bottom:12px}
+.progress-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,#48bb78,#3182ce);transition:width .5s}
+.stats-row{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap}
+.stat-box{flex:1;min-width:100px;background:#f7fafc;border-radius:10px;padding:12px;text-align:center}
+.stat-num{font-size:1.6rem;font-weight:800;color:#2b6cb0}
+.stat-label{font-size:.75rem;color:#718096;margin-top:2px}
+.hidden{display:none}
+.fade-in{animation:fadeIn .3s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.notice{padding:12px 16px;border-radius:8px;font-size:.85rem;margin-bottom:16px}
+.notice-info{background:#ebf4ff;color:#2b6cb0;border-left:4px solid #3182ce}
+.notice-warn{background:#fffaf0;color:#c05621;border-left:4px solid #f6ad55}
+.engine-select{margin-top:12px}
+.reset-btn{float:right;font-size:.8rem;color:#3182ce;cursor:pointer;text-decoration:underline;background:none;border:none;padding:0}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>🔍 АвтоОсмотр</h1>
+  <p>Помощник при проверке подержанного автомобиля</p>
+</div>
+<div class="container">
+
+  <!-- Шаг 1: Выбор автомобиля -->
+  <div class="card" id="step1">
+    <div class="step-indicator">
+      <div class="step active" id="s1"></div>
+      <div class="step" id="s2"></div>
+      <div class="step" id="s3"></div>
+    </div>
+    <div class="card-title"><div class="icon">🚗</div>Выберите автомобиль</div>
+    <div class="select-row">
+      <div class="form-group">
+        <label>Марка</label>
+        <select id="selMake" onchange="onMakeChange()">
+          <option value="">— выберите марку —</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Модель</label>
+        <select id="selModel" onchange="onModelChange()" disabled>
+          <option value="">— сначала марка —</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group engine-select" id="genGroup" style="display:none">
+      <label>Поколение / Кузов</label>
+      <select id="selGen" onchange="onGenChange()">
+        <option value="">— выберите поколение —</option>
+      </select>
+    </div>
+    <div class="form-group engine-select" id="engGroup" style="display:none">
+      <label>Двигатель</label>
+      <select id="selEngine">
+        <option value="">— выберите двигатель —</option>
+      </select>
+    </div>
+    <div class="mileage-row" id="mileageRow" style="display:none;margin-top:16px">
+      <div class="form-group">
+        <label>Пробег автомобиля (км)</label>
+        <input type="number" id="mileage" placeholder="например: 85000" min="0" max="999999" step="1000">
+      </div>
+    </div>
+    <button class="btn btn-primary" id="btnAnalyze" onclick="showResults()" disabled style="margin-top:16px">
+      <span>🔎</span> Начать анализ
+    </button>
+  </div>
+
+  <!-- Результаты -->
+  <div class="card hidden fade-in" id="resultsCard">
+    <div class="step-indicator">
+      <div class="step done"></div>
+      <div class="step done"></div>
+      <div class="step active"></div>
+    </div>
+    <div class="card-title">
+      <div class="icon">📋</div>
+      <span id="resultTitle">Анализ автомобиля</span>
+      <button class="reset-btn" onclick="resetAll()">← Изменить выбор</button>
+    </div>
+
+    <div class="tabs">
+      <div class="tab active" onclick="showTab('problems')">⚠️ Проблемы</div>
+      <div class="tab" onclick="showTab('checklist')">✅ Чек-лист</div>
+      <div class="tab" onclick="showTab('paint')">🎨 ЛКП</div>
+      <div class="tab" onclick="showTab('maintenance')">🔧 ТО</div>
+    </div>
+
+    <div id="tab-problems" class="fade-in"></div>
+    <div id="tab-checklist" class="hidden"></div>
+    <div id="tab-paint" class="hidden"></div>
+    <div id="tab-maintenance" class="hidden"></div>
+  </div>
+
+</div>
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
