@@ -8,12 +8,19 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => loader.classList.add('hide'), 1800);
   }
 
-  /* nav scroll state */
+  /* scroll progress bar */
+  const progress = document.createElement('div');
+  progress.className = 'scroll-progress';
+  document.body.appendChild(progress);
+
+  /* nav scroll state + progress */
   const nav = document.querySelector('.nav');
+  const totop = document.querySelector('.totop');
   const onScroll = () => {
-    if (!nav) return;
-    nav.classList.toggle('is-scrolled', window.scrollY > 40);
-    const totop = document.querySelector('.totop');
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    progress.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
+    if (nav) nav.classList.toggle('is-scrolled', window.scrollY > 40);
     if (totop) totop.classList.toggle('show', window.scrollY > 700);
   };
   document.addEventListener('scroll', onScroll, { passive: true });
@@ -119,9 +126,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  /* contact form (demo — no backend) */
-  const form = document.querySelector('#contactForm');
-  if (form) {
+  /* demo forms (no backend) */
+  document.querySelectorAll('.js-form, #contactForm').forEach((form) => {
     form.addEventListener('submit', (e) => {
       e.preventDefault();
       const btn = form.querySelector('button[type="submit"]');
@@ -130,7 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.style.pointerEvents = 'none';
       setTimeout(() => { btn.innerHTML = original; btn.style.pointerEvents = ''; form.reset(); }, 3200);
     });
-  }
+  });
 
   /* cost calculator (pricing page) */
   const calc = document.querySelector('#calcForm');
@@ -151,4 +157,79 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* back to top */
   document.querySelector('.totop')?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+  /* language toggle (RU / EN demo) */
+  document.querySelectorAll('[data-set-lang]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const lang = btn.dataset.setLang;
+      document.documentElement.setAttribute('data-lang', lang);
+      document.querySelectorAll('[data-set-lang]').forEach(b =>
+        b.classList.toggle('active', b.dataset.setLang === lang));
+    });
+  });
+
+  /* client cabinet — dashboard tabs */
+  document.querySelectorAll('.dash-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      const root = tab.closest('.dash');
+      const key = tab.dataset.tab;
+      root.querySelectorAll('.dash-tab').forEach(t => t.classList.toggle('active', t === tab));
+      root.querySelectorAll('.dash-panel').forEach(p => p.classList.toggle('active', p.dataset.panel === key));
+    });
+  });
+
+  /* generate decorative QR codes (visual placeholder for warranty link) */
+  const drawQR = (el) => {
+    const N = 25, seedStr = el.dataset.qr || 'AURA-A142-STONE-140626';
+    let seed = 0; for (const c of seedStr) seed = (seed * 31 + c.charCodeAt(0)) >>> 0;
+    const rnd = () => { seed = (seed * 1103515245 + 12345) & 0x7fffffff; return seed / 0x7fffffff; };
+    // 7x7 finder pattern at a given top-left corner
+    const inFinder = (r, c) => {
+      const zones = [[0, 0], [0, N - 7], [N - 7, 0]];
+      for (const [zr, zc] of zones) {
+        if (r >= zr && r < zr + 7 && c >= zc && c < zc + 7) {
+          const rr = r - zr, cc = c - zc;
+          const ring = rr === 0 || rr === 6 || cc === 0 || cc === 6;
+          const core = rr >= 2 && rr <= 4 && cc >= 2 && cc <= 4;
+          return { hit: true, on: ring || core };
+        }
+        if (r >= zr - 1 && r <= zr + 7 && c >= zc - 1 && c <= zc + 7) return { hit: true, on: false }; // quiet border
+      }
+      return { hit: false };
+    };
+    let rects = '';
+    for (let r = 0; r < N; r++) for (let c = 0; c < N; c++) {
+      const f = inFinder(r, c);
+      const on = f.hit ? f.on : rnd() > .5;
+      if (on) rects += `<rect x="${c}" y="${r}" width="1" height="1"/>`;
+    }
+    el.innerHTML = `<svg viewBox="0 0 ${N} ${N}" shape-rendering="crispEdges" fill="#16130d">${rects}</svg>`;
+  };
+  document.querySelectorAll('.qr').forEach(drawQR);
+
+  /* behind-the-scenes video modal */
+  const videoTriggers = document.querySelectorAll('[data-video]');
+  if (videoTriggers.length) {
+    const modal = document.createElement('div');
+    modal.className = 'v-modal';
+    modal.innerHTML = '<div class="frame"><button class="close" aria-label="Закрыть">&times;</button><div class="note">Здесь воспроизводится фильм<br>«AURA · За кулисами мастерства»<br><br>(демонстрационный блок — подключается ваше видео)</div></div>';
+    document.body.appendChild(modal);
+    const close = () => modal.classList.remove('open');
+    modal.addEventListener('click', (e) => { if (e.target === modal || e.target.classList.contains('close')) close(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+    videoTriggers.forEach(t => t.addEventListener('click', () => modal.classList.add('open')));
+  }
+
+  /* magnetic gold buttons (subtle premium micro-interaction) */
+  if (window.matchMedia('(pointer:fine)').matches && !window.matchMedia('(prefers-reduced-motion:reduce)').matches) {
+    document.querySelectorAll('.btn-gold').forEach(btn => {
+      btn.addEventListener('pointermove', (e) => {
+        const r = btn.getBoundingClientRect();
+        const x = (e.clientX - r.left - r.width / 2) * 0.18;
+        const y = (e.clientY - r.top - r.height / 2) * 0.28;
+        btn.style.transform = `translate(${x}px,${y - 2}px)`;
+      });
+      btn.addEventListener('pointerleave', () => { btn.style.transform = ''; });
+    });
+  }
 });

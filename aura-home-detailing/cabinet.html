@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ru" class="no-js">
+<head>
+<meta charset="UTF-8">
+<script>document.documentElement.classList.remove("no-js")</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Личный кабинет — цифровой паспорт объекта | AURA HOME DETAILING</title>
+<meta name="description" content="Демонстрация личного кабинета клиента AURA: цифровой паспорт объекта, история визитов, состояние материалов, гарантийный QR-талон и документы.">
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="loader"><div class="mark">AURA</div><div class="bar"></div></div>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="index.html" class="logo">AURA<span>HOME DETAILING</span></a>
+    <nav class="nav-links">
+      <a href="index.html">Главная</a>
+      <a href="about.html">О компании</a>
+      <a href="production.html">Производство</a>
+      <a href="services.html">Услуги</a>
+      <a href="portfolio.html">Портфолио</a>
+      <a href="pricing.html">Цены</a>
+      <a href="partners.html">Партнёрам</a>
+      <a href="blog.html">Блог</a>
+      <a href="contacts.html">Контакты</a>
+    </nav>
+    <div class="nav-cta">
+      <div class="lang-toggle" role="group" aria-label="Язык">
+        <button class="active" data-set-lang="ru">RU</button>
+        <button data-set-lang="en">EN</button>
+      </div>
+      <a href="cabinet.html" class="nav-cabinet">Кабинет</a>
+      <a href="contacts.html" class="btn btn-sm btn-gold">Заявка</a>
+      <button class="burger" aria-label="Меню"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-menu">
+  <button class="mobile-close">&times;</button>
+  <a href="index.html">Главная</a>
+  <a href="about.html">О компании</a>
+  <a href="production.html">Производство</a>
+  <a href="services.html">Услуги</a>
+  <a href="portfolio.html">Портфолио</a>
+  <a href="pricing.html">Цены</a>
+  <a href="partners.html">Партнёрам</a>
+  <a href="blog.html">Блог</a>
+  <a href="cabinet.html">Личный кабинет</a>
+  <a href="contacts.html">Контакты</a>
+</div>
+
+<section class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="container">
+    <div class="crumbs"><a href="index.html">Главная</a><span>/</span><span>Личный кабинет</span></div>
+    <div class="eyebrow">Демонстрация · Личный кабинет</div>
+    <h1>Цифровой паспорт <span class="gold-text">вашего дома</span></h1>
+    <p class="lede">Пример того, как выглядит кабинет клиента AURA: вся история ухода за домом, состояние материалов и гарантийные документы в одном месте.</p>
+  </div>
+</section>
+
+<section class="section bg-dark" style="padding-top:64px">
+  <div class="container">
+    <div class="reveal dash">
+      <!-- sidebar -->
+      <div class="dash-side">
+        <div class="dash-obj">
+          <span class="label">Объект</span>
+          <span class="val">Резиденция №A-142</span>
+        </div>
+        <div class="dash-obj">
+          <span class="label">Адрес</span>
+          <span class="val" style="font-size:15px;font-family:var(--sans);color:var(--muted)">Рублёво-Успенское ш., 620 м²</span>
+        </div>
+        <div class="dash-obj">
+          <span class="label">Программа</span>
+          <span class="val" style="font-size:15px;font-family:var(--sans);color:var(--gold-2)">AURA Club · активна</span>
+        </div>
+        <nav class="dash-nav">
+          <button class="dash-tab active" data-tab="overview">Обзор</button>
+          <button class="dash-tab" data-tab="visits">История визитов <span class="badge">18</span></button>
+          <button class="dash-tab" data-tab="materials">Состояние материалов</button>
+          <button class="dash-tab" data-tab="warranty">Гарантия и QR</button>
+          <button class="dash-tab" data-tab="docs">Документы <span class="badge">7</span></button>
+        </nav>
+      </div>
+
+      <!-- main -->
+      <div class="dash-main">
+        <!-- overview -->
+        <div class="dash-panel active" data-panel="overview">
+          <div class="tag-word">Обзор объекта</div>
+          <div class="dash-stats mt-24">
+            <div><div class="n">18</div><div class="l">визитов с 2024 года</div></div>
+            <div><div class="n">4.9</div><div class="l">индекс состояния дома</div></div>
+            <div><div class="n">24 июля</div><div class="l">следующий визит</div></div>
+          </div>
+          <h3 class="h-sm">Ближайшее обслуживание</h3>
+          <div class="visit mt-24">
+            <div class="date">24.07.2026</div>
+            <div class="what">Плановый уход AURA Club<small>Полировка мрамора холла · питание кожаной группы в кабинете</small></div>
+            <div class="status status-plan">Запланировано</div>
+          </div>
+          <div class="visit">
+            <div class="date">14.06.2026</div>
+            <div class="what">AURA Stone · холл и лестница<small>Кристаллизация мрамора Calacatta, 90 м²</small></div>
+            <div class="status status-done">Выполнено</div>
+          </div>
+          <p class="muted mt-40" style="font-size:13px">Это демонстрационные данные. В реальном кабинете информация обновляется после каждого визита мастера.</p>
+        </div>
+
+        <!-- visits -->
+        <div class="dash-panel" data-panel="visits">
+          <div class="tag-word">История визитов</div>
+          <div class="mt-24">
+            <div class="visit"><div class="date">14.06.2026</div><div class="what">AURA Stone · холл<small>Кристаллизация и защитная пропитка мрамора</small></div><div class="status status-done">Выполнено</div></div>
+            <div class="visit"><div class="date">02.05.2026</div><div class="what">AURA Club · плановый уход<small>Комплексная профилактика ключевых зон</small></div><div class="status status-done">Выполнено</div></div>
+            <div class="visit"><div class="date">18.03.2026</div><div class="what">AURA Wood · библиотека<small>Питание паркета из массива дуба</small></div><div class="status status-done">Выполнено</div></div>
+            <div class="visit"><div class="date">27.01.2026</div><div class="what">AURA Leather · кабинет<small>Восстановление кожаной группы</small></div><div class="status status-done">Выполнено</div></div>
+            <div class="visit"><div class="date">09.12.2025</div><div class="what">AURA Glass · зимний сад<small>Мойка остекления, покрытие «антидождь»</small></div><div class="status status-done">Выполнено</div></div>
+            <div class="visit"><div class="date">24.07.2026</div><div class="what">AURA Club · плановый уход<small>Следующий запланированный визит</small></div><div class="status status-plan">Запланировано</div></div>
+          </div>
+        </div>
+
+        <!-- materials -->
+        <div class="dash-panel" data-panel="materials">
+          <div class="tag-word">Состояние материалов</div>
+          <p class="muted mt-16" style="font-size:14px">Оценка технолога по итогам последнего визита. 100% — состояние «как новое».</p>
+          <div class="meter-row mt-40">
+            <div class="meter"><span class="m-name">Мрамор, холл</span><span class="m-bar"><span class="m-fill" style="--v:96%"></span></span><span class="m-val">96%</span></div>
+            <div class="meter"><span class="m-name">Паркет, дуб</span><span class="m-bar"><span class="m-fill" style="--v:88%"></span></span><span class="m-val">88%</span></div>
+            <div class="meter"><span class="m-name">Кожа, кабинет</span><span class="m-bar"><span class="m-fill" style="--v:82%"></span></span><span class="m-val">82%</span></div>
+            <div class="meter"><span class="m-name">Текстиль, шторы</span><span class="m-bar"><span class="m-fill" style="--v:91%"></span></span><span class="m-val">91%</span></div>
+            <div class="meter"><span class="m-name">Остекление</span><span class="m-bar"><span class="m-fill" style="--v:94%"></span></span><span class="m-val">94%</span></div>
+          </div>
+          <div class="mt-40" style="border-left:2px solid var(--gold-2);padding:6px 0 6px 24px">
+            <p class="muted" style="font-size:14px">Рекомендация: кожаной группе в кабинете стоит уделить внимание на следующем визите — показатель эластичности снизился после отопительного сезона.</p>
+          </div>
+        </div>
+
+        <!-- warranty -->
+        <div class="dash-panel" data-panel="warranty">
+          <div class="tag-word">Гарантийный QR-талон</div>
+          <p class="muted mt-16" style="font-size:14px">Каждая работа сопровождается QR-талоном. Наведите камеру — откроется протокол работ, состав, фотоотчёт и условия гарантии.</p>
+          <div class="warranty mt-40">
+            <div class="qr"></div>
+            <div class="warranty-meta">
+              <div class="row"><span class="k">Работа</span><span class="v">AURA Stone · холл</span></div>
+              <div class="row"><span class="k">Дата</span><span class="v">14.06.2026</span></div>
+              <div class="row"><span class="k">Мастер</span><span class="v">Сергей Т.</span></div>
+              <div class="row"><span class="k">Состав</span><span class="v">AURA Stone Restore + Protect</span></div>
+              <div class="row"><span class="k">Гарантия до</span><span class="v">14.07.2026</span></div>
+              <div class="row"><span class="k">Ответственность</span><span class="v">застрахована 10 000 000 ₽</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- docs -->
+        <div class="dash-panel" data-panel="docs">
+          <div class="tag-word">Документы</div>
+          <div class="mt-24">
+            <div class="visit"><div class="date">PDF</div><div class="what">Договор на обслуживание<small>AURA Club · подписан 12.01.2024</small></div><a class="status status-plan" href="#" onclick="return false">Открыть</a></div>
+            <div class="visit"><div class="date">PDF</div><div class="what">Акт выполненных работ №142-06<small>AURA Stone · 14.06.2026</small></div><a class="status status-plan" href="#" onclick="return false">Открыть</a></div>
+            <div class="visit"><div class="date">PDF</div><div class="what">Страховой полис ответственности<small>Лимит 10 000 000 ₽</small></div><a class="status status-plan" href="#" onclick="return false">Открыть</a></div>
+            <div class="visit"><div class="date">PDF</div><div class="what">Сертификаты на составы AURA<small>Пакет из 4 документов</small></div><a class="status status-plan" href="#" onclick="return false">Открыть</a></div>
+            <div class="visit"><div class="date">PDF</div><div class="what">Цифровой паспорт объекта<small>Карта материалов и график ухода</small></div><a class="status status-plan" href="#" onclick="return false">Открыть</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="muted center mt-40" style="font-size:12.5px;letter-spacing:.08em">Это интерактивная демонстрация. Реальный кабинет доступен клиентам AURA после первого визита.</p>
+  </div>
+</section>
+
+<section class="cta-banner">
+  <div class="cta-banner-bg"></div>
+  <div class="container reveal">
+    <div class="eyebrow center">Хотите такой кабинет для своего дома</div>
+    <h2 class="h-lg">Начните с бесплатной диагностики</h2>
+    <div class="mt-40" style="display:flex;justify-content:center;gap:18px;flex-wrap:wrap">
+      <a href="contacts.html" class="btn btn-gold">Оставить заявку</a>
+      <a href="pricing.html" class="btn">Пакеты и цены</a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <a href="index.html" class="logo">AURA<span>HOME DETAILING</span></a>
+        <p class="muted mt-24" style="max-width:280px;font-size:14px">Забота, которая сохраняет и приумножает ценность вашего дома. Собственное производство химии с 2015 года.</p>
+        <div class="footer-badges"><div class="footer-badge"><span class="diamond"></span>Застраховано на 10 000 000 ₽</div></div>
+        <div class="social-row"><a href="#">TG</a><a href="#">IG</a><a href="#">VK</a><a href="#">YT</a></div>
+      </div>
+      <div><h4>Навигация</h4><ul><li><a href="about.html">О компании</a></li><li><a href="production.html">Производство</a></li><li><a href="services.html">Услуги</a></li><li><a href="portfolio.html">Портфолио</a></li><li><a href="pricing.html">Цены</a></li><li><a href="partners.html">Партнёрам</a></li><li><a href="blog.html">Блог</a></li></ul></div>
+      <div><h4>Услуги</h4><ul><li><a href="services.html#stone">AURA Stone</a></li><li><a href="services.html#wood">AURA Wood</a></li><li><a href="services.html#textile">AURA Textile</a></li><li><a href="services.html#leather">AURA Leather</a></li><li><a href="services.html#club">AURA Club (подписка)</a></li></ul></div>
+      <div><h4>Контакты</h4><ul><li><a href="tel:+74951184040">+7 (495) 118-40-40</a></li><li><a href="mailto:info@aurahome.ru">info@aurahome.ru</a></li><li><span class="muted">Москва, Рублёвское ш., БЦ «Аврора»</span></li><li><span class="muted">Ежедневно 9:00–21:00</span></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 AURA HOME DETAILING. Все права защищены.</div>
+      <div style="display:flex;gap:24px"><a href="#">Политика конфиденциальности</a><a href="#">Публичная оферта</a></div>
+    </div>
+  </div>
+</footer>
+
+<button class="totop" aria-label="Наверх">↑</button>
+<script src="js/main.js"></script>
+</body>
+</html>

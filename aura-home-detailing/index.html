@@ -24,11 +24,16 @@
       <a href="services.html">Услуги</a>
       <a href="portfolio.html">Портфолио</a>
       <a href="pricing.html">Цены</a>
+      <a href="partners.html">Партнёрам</a>
       <a href="blog.html">Блог</a>
       <a href="contacts.html">Контакты</a>
     </nav>
     <div class="nav-cta">
-      <div class="nav-phone">+7 (495) 118-40-40<span class="muted">Ежедневно, 9:00–21:00</span></div>
+      <div class="lang-toggle" role="group" aria-label="Язык">
+        <button class="active" data-set-lang="ru">RU</button>
+        <button data-set-lang="en">EN</button>
+      </div>
+      <a href="cabinet.html" class="nav-cabinet">Кабинет</a>
       <a href="contacts.html" class="btn btn-sm btn-gold">Заявка</a>
       <button class="burger" aria-label="Меню"><span></span><span></span><span></span></button>
     </div>
@@ -43,30 +48,37 @@
   <a href="services.html">Услуги</a>
   <a href="portfolio.html">Портфолио</a>
   <a href="pricing.html">Цены</a>
+  <a href="partners.html">Партнёрам</a>
   <a href="blog.html">Блог</a>
+  <a href="cabinet.html">Личный кабинет</a>
   <a href="contacts.html">Контакты</a>
 </div>
 
 <!-- HERO -->
-<section class="hero" style="--img:url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=2000&auto=format&fit=crop')">
+<section class="hero">
   <div class="hero-bg"></div>
   <div class="container hero-content">
     <div class="hero-tagline">Premium Home Detailing · Москва</div>
     <h1>AURA</h1>
-    <div class="hero-sub">Искусство сохранения ценности элитной недвижимости</div>
-    <p class="hero-desc">Собственное производство профессиональной химии с 2015 года и мастера, которые работают с камнем, деревом, кожей и текстилем как реставраторы, а не клинеры. Ваш дом — это больше, чем жильё. Это отражение статуса, вкуса и достижений.</p>
+    <div class="hero-sub">
+      <span class="ru-only">Искусство сохранения ценности элитной недвижимости</span>
+      <span class="en-only">The art of preserving the value of elite real estate</span>
+    </div>
+    <p class="hero-desc">
+      <span class="ru-only">Собственное производство профессиональной химии с 2015 года и мастера, которые работают с камнем, деревом, кожей и текстилем как реставраторы, а не клинеры. Ваш дом — это больше, чем жильё.</span>
+      <span class="en-only">Our own professional-grade chemistry since 2015, and craftsmen who treat stone, wood, leather and textile as restorers — not cleaners. Your home is more than a residence.</span>
+    </p>
     <div class="hero-actions">
-      <a href="contacts.html" class="btn btn-gold">Оставить заявку <span class="btn-arrow">→</span></a>
-      <a href="production.html" class="btn">Наше производство</a>
+      <a href="contacts.html" class="btn btn-gold"><span class="ru-only">Оставить заявку</span><span class="en-only">Request a visit</span> <span class="btn-arrow">→</span></a>
+      <a href="production.html" class="btn"><span class="ru-only">Наше производство</span><span class="en-only">Our production</span></a>
     </div>
     <div class="hero-strip">
-      <div><strong>10&nbsp;лет</strong>Собственные разработки</div>
-      <div><strong>10&nbsp;000&nbsp;000&nbsp;₽</strong>Страхование ответственности</div>
-      <div><strong>240+</strong>Объектов на Рублёвке и Новой Риге</div>
-      <div><strong>30&nbsp;дней</strong>Гарантия результата</div>
+      <div><strong>10&nbsp;<span class="ru-only">лет</span><span class="en-only">years</span></strong><span class="ru-only">Собственные разработки</span><span class="en-only">In-house R&amp;D</span></div>
+      <div><strong>10&nbsp;000&nbsp;000&nbsp;₽</strong><span class="ru-only">Страхование ответственности</span><span class="en-only">Liability insured</span></div>
+      <div><strong>240+</strong><span class="ru-only">Объектов на Рублёвке и Новой Риге</span><span class="en-only">Estates served near Moscow</span></div>
+      <div><strong>30&nbsp;<span class="ru-only">дней</span><span class="en-only">days</span></strong><span class="ru-only">Гарантия результата</span><span class="en-only">Result guarantee</span></div>
     </div>
   </div>
-  <div class="scroll-cue"><div class="line"></div></div>
 </section>
 
 <!-- MARQUEE -->
@@ -125,9 +137,7 @@
   <div class="container">
     <div class="split">
       <div class="reveal">
-        <div class="ph ph-duo ratio-4-3">
-          <img src="https://images.unsplash.com/photo-1616401784845-180882ba9ba8?q=80&w=1400&auto=format&fit=crop" alt="Собственная лаборатория AURA — разработка составов">
-        </div>
+        <div class="ph ph-duo ratio-4-3 viz viz-lab"></div>
       </div>
       <div class="reveal reveal-delay-2">
         <div class="eyebrow">03 · Наше отличие</div>
@@ -230,8 +240,7 @@
     </div>
     <div class="reveal">
       <div class="ba">
-        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1600&auto=format&fit=crop" alt="До обработки">
-        <img class="ba-after" src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=80&w=1600&auto=format&fit=crop" alt="После обработки AURA">
+        <div class="viz viz-marble dull"></div><div class="ba-after viz viz-marble"></div>
         <div class="ba-handle"></div>
         <div class="ba-tag before">До</div>
         <div class="ba-tag after">После AURA</div>
@@ -260,30 +269,71 @@
   </div>
 </section>
 
-<!-- TESTIMONIALS -->
+<!-- LIVE REVIEWS FEED -->
 <section class="section bg-dark">
   <div class="container">
     <div class="head-row reveal">
       <div>
         <div class="eyebrow">08 · Отзывы</div>
-        <h2 class="h-lg">Что говорят наши клиенты</h2>
+        <h2 class="h-lg">Живая лента отзывов</h2>
+      </div>
+      <p class="lede max-560">Реальные оценки клиентов с Яндекс.Карт и Google. Обновляется автоматически — без модерации и правок.</p>
+    </div>
+
+    <div class="flex-grid flex-2 reveal" style="margin-bottom:26px">
+      <div class="rev-agg">
+        <div class="score">4.9</div>
+        <div class="src-line">
+          <div class="stars">★★★★★</div>
+          <div class="s">Яндекс.Карты <small>· 128 отзывов</small></div>
+        </div>
+        <div class="src-line">
+          <div class="stars">★★★★★</div>
+          <div class="s">Google Reviews <small>· 94 отзыва</small></div>
+        </div>
+      </div>
+      <div class="rev-agg" style="justify-content:space-between">
+        <div class="src-line"><div class="s" style="font-size:13px;color:var(--muted)">Рекомендуют друзьям</div><div class="score" style="font-size:40px">97%</div></div>
+        <div class="src-line"><div class="s" style="font-size:13px;color:var(--muted)">Повторно обращаются</div><div class="score" style="font-size:40px">98%</div></div>
+        <div class="src-line"><div class="s" style="font-size:13px;color:var(--muted)">Средний ответ</div><div class="score" style="font-size:40px">42<small style="font-size:16px"> мин</small></div></div>
       </div>
     </div>
+
     <div class="flex-grid flex-3 reveal">
-      <div class="testi">
+      <div class="rev-card">
+        <div class="rev-top"><div class="rev-ava">А</div><div class="rev-who"><span class="nm">Александр В.</span><span class="dt">2 недели назад</span></div><span class="rev-src">Яндекс</span></div>
         <div class="stars">★★★★★</div>
-        <p>«Мраморные полы в холле выглядели тусклыми уже через год после сдачи дома. После AURA Stone камень как из шоурума — и это держится уже восемь месяцев».</p>
-        <div class="who"><strong>Александр В.</strong>Резиденция, Рублёво-Успенское ш.</div>
+        <p>Мраморные полы в холле выглядели тусклыми уже через год после сдачи дома. После AURA Stone камень как из шоурума — и это держится уже восемь месяцев.</p>
       </div>
-      <div class="testi">
+      <div class="rev-card">
+        <div class="rev-top"><div class="rev-ava">М</div><div class="rev-who"><span class="nm">Марина К.</span><span class="dt">месяц назад</span></div><span class="rev-src">Google</span></div>
         <div class="stars">★★★★★</div>
-        <p>«Важна была конфиденциальность и то, что бригада работает по протоколу, а не «на глаз». Персональный менеджер снял с меня все вопросы по дому».</p>
-        <div class="who"><strong>Марина К.</strong>Посёлок, Новорижское ш.</div>
+        <p>Важна была конфиденциальность и то, что бригада работает по протоколу, а не «на глаз». Персональный менеджер снял с меня все вопросы по дому.</p>
       </div>
-      <div class="testi">
+      <div class="rev-card">
+        <div class="rev-top"><div class="rev-ava">Д</div><div class="rev-who"><span class="nm">Дмитрий С.</span><span class="dt">месяц назад</span></div><span class="rev-src">Яндекс</span></div>
         <div class="stars">★★★★★</div>
-        <p>«Перешли на подписку AURA Club — теперь дом всегда в идеальном состоянии к приезду гостей, а не только раз в полгода после генеральной уборки».</p>
-        <div class="who"><strong>Дмитрий С.</strong>Клубный посёлок, Барвиха</div>
+        <p>Перешли на подписку AURA Club — теперь дом всегда в идеальном состоянии к приезду гостей, а не только раз в полгода после генеральной уборки.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BEHIND THE SCENES VIDEO -->
+<section class="section bg-alt">
+  <div class="container">
+    <div class="head-row reveal">
+      <div>
+        <div class="eyebrow">За кулисами</div>
+        <h2 class="h-lg">Мастерство, которое <span class="gold-text">видно вблизи</span></h2>
+      </div>
+      <p class="lede max-560">Как рождается результат — от диагностики материала до финишной полировки. Смотрите, как работает команда AURA.</p>
+    </div>
+    <div class="reveal video-block viz viz-forest" data-video>
+      <div class="play"></div>
+      <div class="v-cap">
+        <div class="t">AURA · За кулисами мастерства</div>
+        <div class="s">Фильм о работе команды · 3:24</div>
       </div>
     </div>
   </div>
@@ -301,19 +351,19 @@
     </div>
     <div class="flex-grid flex-3 reveal">
       <a href="blog-himiya-vs-klining.html" class="blog-card">
-        <div class="ph ph-duo ratio-4-3"><img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=80&w=1200&auto=format&fit=crop" alt=""></div>
+        <div class="ph ph-duo ratio-4-3 viz viz-marble"></div>
         <div class="meta"><span>Экспертиза</span><span>6 мин чтения</span></div>
         <h3>Почему обычная химия портит натуральный камень</h3>
         <p>Разбираем, что происходит с мрамором и травертином при контакте с бытовыми средствами из супермаркета.</p>
       </a>
       <a href="blog-uhod-za-parketom.html" class="blog-card">
-        <div class="ph ph-duo ratio-4-3"><img src="https://images.unsplash.com/photo-1618219908412-a29a1bb7b86e?q=80&w=1200&auto=format&fit=crop" alt=""></div>
+        <div class="ph ph-duo ratio-4-3 viz viz-wood"></div>
         <div class="meta"><span>Гид</span><span>5 мин чтения</span></div>
         <h3>Уход за премиальным паркетом: инструкция на 12 месяцев</h3>
         <p>Сезонный чек-лист, который продлевает жизнь инженерной доске и массиву в загородном доме.</p>
       </a>
       <a href="blog-sertifikaty-testy.html" class="blog-card">
-        <div class="ph ph-duo ratio-4-3"><img src="https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?q=80&w=1200&auto=format&fit=crop" alt=""></div>
+        <div class="ph ph-duo ratio-4-3 viz viz-lab"></div>
         <div class="meta"><span>Производство</span><span>7 мин чтения</span></div>
         <h3>Как мы тестируем составы, прежде чем выйти на объект</h3>
         <p>Путь формулы от лаборатории до сертификата: какие испытания проходит каждая партия AURA.</p>
@@ -322,8 +372,60 @@
   </div>
 </section>
 
+<!-- CLIENT CABINET TEASER -->
+<section class="section bg-dark">
+  <div class="container">
+    <div class="split">
+      <div class="reveal">
+        <div class="eyebrow">Личный кабинет</div>
+        <h2 class="h-lg">Цифровой паспорт <span class="gold-text">вашего дома</span></h2>
+        <p class="lede mt-24">Каждый объект получает личный кабинет: история визитов, состояние материалов, гарантийные документы и QR-талон на каждую работу. Вы всегда видите, когда и что обрабатывалось.</p>
+        <ul class="mt-40" style="display:flex;flex-direction:column">
+          <li style="padding:16px 0;border-top:1px solid var(--line);display:flex;gap:14px;font-size:14.5px;color:var(--muted)"><span class="diamond" style="margin-top:6px;flex-shrink:0"></span>История всех визитов и выполненных работ</li>
+          <li style="padding:16px 0;border-top:1px solid var(--line);display:flex;gap:14px;font-size:14.5px;color:var(--muted)"><span class="diamond" style="margin-top:6px;flex-shrink:0"></span>Карта материалов дома и их текущее состояние</li>
+          <li style="padding:16px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);display:flex;gap:14px;font-size:14.5px;color:var(--muted)"><span class="diamond" style="margin-top:6px;flex-shrink:0"></span>QR-гарантийный талон и протоколы работ онлайн</li>
+        </ul>
+        <a href="cabinet.html" class="btn btn-gold mt-40">Открыть демо-кабинет <span class="btn-arrow">→</span></a>
+      </div>
+      <div class="reveal reveal-delay-2">
+        <div class="warranty">
+          <div class="qr" id="heroQr"></div>
+          <div class="warranty-meta">
+            <div class="tag-word">Гарантийный талон</div>
+            <div class="row"><span class="k">Объект</span><span class="v">Резиденция №A-142</span></div>
+            <div class="row"><span class="k">Работа</span><span class="v">AURA Stone · холл</span></div>
+            <div class="row"><span class="k">Дата</span><span class="v">14.06.2026</span></div>
+            <div class="row"><span class="k">Гарантия до</span><span class="v">14.07.2026</span></div>
+            <div class="row"><span class="k">Застраховано</span><span class="v">10 000 000 ₽</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PARTNERS TEASER -->
+<section class="section-sm bg-alt">
+  <div class="container">
+    <div class="head-row reveal">
+      <div>
+        <div class="eyebrow">Партнёрам</div>
+        <h2 class="h-lg">Рост через доверие</h2>
+      </div>
+      <a href="partners.html" class="btn">Стать партнёром <span class="btn-arrow">→</span></a>
+    </div>
+    <div class="logo-strip reveal">
+      <div>Агентства недвижимости</div>
+      <div>Управляющие компании</div>
+      <div>Дизайнеры и архитекторы</div>
+      <div>Премиальные застройщики</div>
+    </div>
+  </div>
+</section>
+
 <!-- CTA -->
-<section class="cta-banner" style="--img:url('https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=2000&auto=format&fit=crop')">
+<section class="cta-banner">
+  <div class="cta-banner-bg"></div>
   <div class="container reveal">
     <div class="eyebrow center">Начните сегодня</div>
     <h2 class="h-lg">Доверьте дом тем, кто <span class="gold-text">создаёт химию сам</span></h2>
@@ -360,6 +462,8 @@
           <li><a href="services.html">Услуги</a></li>
           <li><a href="portfolio.html">Портфолио</a></li>
           <li><a href="pricing.html">Цены</a></li>
+          <li><a href="partners.html">Партнёрам</a></li>
+          <li><a href="cabinet.html">Личный кабинет</a></li>
           <li><a href="blog.html">Блог</a></li>
         </ul>
       </div>

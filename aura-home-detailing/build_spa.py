@@ -11,6 +11,8 @@ PAGES = [
     ("services.html", "services", "Услуги"),
     ("portfolio.html", "portfolio", "Портфолио"),
     ("pricing.html", "pricing", "Цены"),
+    ("partners.html", "partners", "Партнёрам"),
+    ("cabinet.html", "cabinet", "Кабинет"),
     ("blog.html", "blog", "Блог"),
     ("contacts.html", "contacts", "Контакты"),
     ("case-stone-rublevka.html", "case-stone-rublevka", "Портфолио"),
