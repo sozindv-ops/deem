@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Merge the multi-page AURA site into one self-contained single-file SPA."""
-import re, pathlib
+import re, pathlib, base64, mimetypes
 
 ROOT = pathlib.Path(__file__).parent
 
@@ -28,6 +28,23 @@ NAV_BY_SLUG = {s: n for _, s, n in PAGES}
 
 MOBILE_MENU_MARKER_START = '<div class="mobile-menu">'
 FOOTER_MARKER = '<footer class="footer">'
+
+_IMG_CACHE = {}
+def inline_local_images(html: str) -> str:
+    """Replace src="images/xxx.jpg" with an embedded base64 data URI so the
+    single-file build stays self-contained (needed for Artifact publishing,
+    which only ships the one file)."""
+    def repl(m):
+        rel = m.group(1)
+        if rel not in _IMG_CACHE:
+            fp = ROOT / "images" / rel
+            if not fp.is_file():
+                return m.group(0)
+            mime = mimetypes.guess_type(fp.name)[0] or "image/jpeg"
+            b64 = base64.b64encode(fp.read_bytes()).decode("ascii")
+            _IMG_CACHE[rel] = f'src="data:{mime};base64,{b64}"'
+        return _IMG_CACHE[rel]
+    return re.sub(r'src="images/([a-zA-Z0-9_.-]+)"', repl, html)
 
 def extract_fragment(html: str) -> str:
     start = html.index(MOBILE_MENU_MARKER_START)
@@ -57,6 +74,7 @@ for fname, slug, _navlabel in PAGES:
     html = (ROOT / fname).read_text(encoding="utf-8")
     frag = extract_fragment(html)
     frag = fix_links(frag)
+    frag = inline_local_images(frag)
     if fname == "pricing.html":
         frag = frag.replace('class="price-card" id="club"', 'class="price-card" id="pricing-club"')
     sections.append(
