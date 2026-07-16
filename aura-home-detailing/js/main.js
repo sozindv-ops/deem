@@ -22,6 +22,41 @@ document.addEventListener('DOMContentLoaded', () => {
   };
   document.querySelectorAll('.ph img, .hero-bg img, .page-hero-bg img, .cta-banner-bg img, .video-block img').forEach(wireImg);
 
+  /* floating decorative markers drifting over hero photography */
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduceMotion) {
+    document.querySelectorAll('.hero-bg, .page-hero-bg').forEach((host) => {
+      const count = host.classList.contains('page-hero-bg') ? 3 : 5;
+      for (let i = 0; i < count; i++) {
+        const dot = document.createElement('span');
+        dot.className = 'float-dot';
+        dot.style.left = (10 + Math.random() * 80) + '%';
+        dot.style.top = (15 + Math.random() * 60) + '%';
+        dot.style.animationDelay = (Math.random() * 5).toFixed(2) + 's';
+        dot.style.setProperty('--ring-delay', (Math.random() * 3).toFixed(2) + 's');
+        const ring = dot;
+        ring.style.animationDuration = (6 + Math.random() * 3).toFixed(2) + 's';
+        host.appendChild(dot);
+      }
+    });
+  }
+
+  /* subtle parallax on hero while scrolling the first viewport
+     (applied to the .hero-bg container, not the <img>, so it doesn't
+     fight the Ken Burns keyframe animation running on the image itself) */
+  const heroEl = document.querySelector('.hero');
+  if (heroEl && !reduceMotion) {
+    const heroBg = heroEl.querySelector('.hero-bg');
+    const heroContent = heroEl.querySelector('.hero-content');
+    const onHeroParallax = () => {
+      const y = window.scrollY;
+      if (y > window.innerHeight * 1.2) return;
+      if (heroBg) heroBg.style.transform = `translateY(${y * 0.14}px)`;
+      if (heroContent) { heroContent.style.transform = `translateY(${y * 0.06}px)`; heroContent.style.opacity = String(Math.max(0, 1 - y / 700)); }
+    };
+    document.addEventListener('scroll', onHeroParallax, { passive: true });
+  }
+
   /* preloader */
   const loader = document.querySelector('.loader');
   if (loader) {
