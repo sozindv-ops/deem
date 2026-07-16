@@ -107,7 +107,7 @@ section{position:relative}
 }
 .btn>*{position:relative;z-index:2}
 .btn::before{
-  content:'';position:absolute;inset:0;z-index:1;background:var(--white);border-radius:inherit;
+  content:'';position:absolute;inset:0;z-index:-1;background:var(--white);border-radius:inherit;
   transform:scaleX(0);transform-origin:left;transition:transform .5s var(--ease);
 }
 .btn:hover,.btn:focus-visible{color:#111;border-color:var(--white);transform:translateY(-1px)}
