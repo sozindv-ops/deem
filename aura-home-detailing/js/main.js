@@ -1,6 +1,17 @@
 /* AURA HOME DETAILING — shared interactions */
 document.addEventListener('DOMContentLoaded', () => {
 
+  /* photo loading: fade in on success, keep textured fallback on failure */
+  const wireImg = (img) => {
+    const ok = () => img.classList.add('ok');
+    if (img.complete && img.naturalWidth > 0) ok();
+    else {
+      img.addEventListener('load', ok, { once: true });
+      img.addEventListener('error', () => img.remove(), { once: true });
+    }
+  };
+  document.querySelectorAll('.ph img, .hero-bg img, .page-hero-bg img, .cta-banner-bg img, .video-block img').forEach(wireImg);
+
   /* preloader */
   const loader = document.querySelector('.loader');
   if (loader) {

@@ -147,23 +147,13 @@ router_js = """
     "{" + ",".join(f"'{s}':'{n}'" for _, s, n in PAGES) + "}"
 )
 
-html_out = f"""<!DOCTYPE html>
-<html lang="ru" class="no-js">
-<head>
-<meta charset="UTF-8">
-<script>document.documentElement.classList.remove("no-js")</script>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AURA HOME DETAILING — Премиальный уход за элитной недвижимостью Москвы</title>
-<meta name="description" content="AURA HOME DETAILING — детейлинг элитной недвижимости Рублёвки, Новорижского и Сколково. Собственное производство химии с 2015 года, ответственность застрахована на 10 000 000 ₽.">
-<link rel="icon" href="data:,">
-<style>
+# Shared inner content (works whether or not it's wrapped in <html>/<body>)
+body_content = f"""<style>
 {css}
 .page-section[hidden]{{display:none}}
 </style>
-</head>
-<body>
 
-<div class="loader"><div class="mark">AURA</div></div>
+<div class="loader"><div class="mark">AURA</div><div class="bar"></div></div>
 
 {header_block}
 {menu_block}
@@ -179,10 +169,28 @@ html_out = f"""<!DOCTYPE html>
 <script>
 {router_js}
 </script>
+"""
+
+# 1) Full standalone document — for direct hosting / opening the file
+full_doc = f"""<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AURA HOME DETAILING — Премиальный уход за элитной недвижимостью Москвы</title>
+<meta name="description" content="AURA HOME DETAILING — детейлинг элитной недвижимости Рублёвки, Новорижского и Сколково. Собственное производство химии с 2015 года, ответственность застрахована на 10 000 000 ₽.">
+<link rel="icon" href="data:,">
+</head>
+<body>
+{body_content}
 </body>
 </html>
 """
+out_full = ROOT / "aura-single.html"
+out_full.write_text(full_doc, encoding="utf-8")
+print(f"Wrote {out_full} ({len(full_doc)/1024:.1f} KB)")
 
-out_path = ROOT / "aura-single.html"
-out_path.write_text(html_out, encoding="utf-8")
-print(f"Wrote {out_path} ({len(html_out)/1024:.1f} KB)")
+# 2) Body-only fragment — for publishing as an Artifact (platform adds <head>/<body>)
+out_frag = ROOT / "aura-artifact.html"
+out_frag.write_text(body_content, encoding="utf-8")
+print(f"Wrote {out_frag} ({len(body_content)/1024:.1f} KB)")
