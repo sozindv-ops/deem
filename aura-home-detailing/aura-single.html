@@ -169,8 +169,8 @@ section{position:relative}
 .burger span:nth-child(1){top:17px}.burger span:nth-child(2){top:22px}.burger span:nth-child(3){top:27px}
 @media (max-width:1340px){.nav-links,.nav-cta .nav-phone,.nav-cta .nav-cabinet,.nav-cta .lang-toggle{display:none}.burger{display:block}}
 
-.mobile-menu{position:fixed;inset:0;background:var(--bg);z-index:1100;display:flex;flex-direction:column;justify-content:center;padding:44px;transform:translateY(-102%);transition:transform .6s var(--ease)}
-.mobile-menu.open{transform:translateY(0)}
+.mobile-menu{position:fixed;inset:0;background:var(--bg);z-index:1100;display:flex;flex-direction:column;justify-content:center;gap:2px;padding:44px;overflow-y:auto;transform:translateY(-102%);visibility:hidden;transition:transform .6s var(--ease),visibility .6s}
+.mobile-menu.open{transform:translateY(0);visibility:visible}
 .mobile-menu a{font-size:clamp(26px,6.4vw,36px);font-weight:500;letter-spacing:-.02em;padding:14px 0;border-bottom:1px solid var(--line);color:var(--white);transition:color .3s,padding-left .3s}
 .mobile-menu a:hover{color:var(--accent);padding-left:12px}
 .mobile-close{position:absolute;top:26px;right:24px;width:46px;height:46px;border-radius:50%;border:1px solid var(--line-2);background:none;color:var(--white);font-size:24px;line-height:1}
@@ -572,6 +572,7 @@ article.post blockquote{font-family:var(--serif);font-size:24px;font-style:itali
       <a href="#pricing">Цены</a>
       <a href="#partners">Партнёрам</a>
       <a href="#blog">Блог</a>
+      <a href="#contacts">Контакты</a>
     </nav>
     <div class="nav-cta">
       <div class="lang-toggle" role="group" aria-label="Язык">
