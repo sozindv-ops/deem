@@ -49,6 +49,8 @@ document.addEventListener('DOMContentLoaded', () => {
       entries.forEach(e => {
         if (!e.isIntersecting) return;
         const el = e.target;
+        if (el.dataset.done) { cio.unobserve(el); return; }
+        el.dataset.done = '1';
         const target = parseFloat(el.dataset.count);
         const decimals = (el.dataset.count.split('.')[1] || '').length;
         const suffix = el.dataset.suffix || '';
