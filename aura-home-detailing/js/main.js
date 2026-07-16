@@ -1,13 +1,23 @@
 /* AURA HOME DETAILING — shared interactions */
 document.addEventListener('DOMContentLoaded', () => {
 
-  /* photo loading: fade in on success, keep textured fallback on failure */
+  /* photo loading: try local file first, fall back to the stock URL,
+     then to the textured placeholder. Fades in once something loads. */
   const wireImg = (img) => {
     const ok = () => img.classList.add('ok');
+    const onErr = () => {
+      if (img.dataset.fallback) {           // swap to fallback source once
+        const fb = img.dataset.fallback;
+        delete img.dataset.fallback;
+        img.src = fb;
+      } else {
+        img.remove();                         // reveal textured placeholder
+      }
+    };
     if (img.complete && img.naturalWidth > 0) ok();
     else {
-      img.addEventListener('load', ok, { once: true });
-      img.addEventListener('error', () => img.remove(), { once: true });
+      img.addEventListener('load', ok);
+      img.addEventListener('error', onErr);
     }
   };
   document.querySelectorAll('.ph img, .hero-bg img, .page-hero-bg img, .cta-banner-bg img, .video-block img').forEach(wireImg);
