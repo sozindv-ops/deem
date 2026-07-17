@@ -256,13 +256,21 @@ document.addEventListener('DOMContentLoaded', () => {
   /* back to top */
   document.querySelector('.totop')?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
-  /* language toggle (RU / EN demo) */
+  /* language toggle — applies site-wide and persists across page loads
+     (each page is a full reload outside the single-file SPA build, so
+     without this the language would silently reset to RU on every click) */
+  const applyLang = (lang) => {
+    document.documentElement.setAttribute('data-lang', lang);
+    document.querySelectorAll('[data-set-lang]').forEach(b =>
+      b.classList.toggle('active', b.dataset.setLang === lang));
+  };
+  const savedLang = (() => { try { return localStorage.getItem('aura-lang'); } catch (e) { return null; } })();
+  if (savedLang === 'en') applyLang('en');
   document.querySelectorAll('[data-set-lang]').forEach(btn => {
     btn.addEventListener('click', () => {
       const lang = btn.dataset.setLang;
-      document.documentElement.setAttribute('data-lang', lang);
-      document.querySelectorAll('[data-set-lang]').forEach(b =>
-        b.classList.toggle('active', b.dataset.setLang === lang));
+      applyLang(lang);
+      try { localStorage.setItem('aura-lang', lang); } catch (e) {}
     });
   });
 
