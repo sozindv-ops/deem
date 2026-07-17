@@ -318,7 +318,10 @@ document.addEventListener('DOMContentLoaded', () => {
   if (videoTriggers.length) {
     const modal = document.createElement('div');
     modal.className = 'v-modal';
-    modal.innerHTML = '<div class="frame"><button class="close" aria-label="Закрыть">&times;</button><div class="note">Здесь воспроизводится фильм<br>«AURA · За кулисами мастерства»<br><br>(демонстрационный блок — подключается ваше видео)</div></div>';
+    modal.innerHTML = '<div class="frame"><button class="close" aria-label="Закрыть">&times;</button><div class="note">'
+      + '<span class="ru-only">Здесь воспроизводится фильм<br>«AURA · За кулисами мастерства»<br><br>(демонстрационный блок — подключается ваше видео)</span>'
+      + '<span class="en-only">This is where the film plays<br>“AURA · Behind the Craft”<br><br>(demo placeholder — your video connects here)</span>'
+      + '</div></div>';
     document.body.appendChild(modal);
     const close = () => modal.classList.remove('open');
     modal.addEventListener('click', (e) => { if (e.target === modal || e.target.classList.contains('close')) close(); });
