@@ -166,7 +166,14 @@ router_js = """
 )
 
 # Shared inner content (works whether or not it's wrapped in <html>/<body>)
-body_content = f"""<style>
+# The viewport/charset meta tags are included even in the body-only fragment:
+# browsers hoist stray <meta>/<title>/<link> tags found in <body> into <head>
+# per the HTML parsing spec, so this works even though the Artifact platform
+# supplies its own <head>. Without it, mobile browsers fall back to a ~980px
+# desktop layout viewport, which breaks image sizing/lazy-load thresholds.
+body_content = f"""<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
 {css}
 .page-section[hidden]{{display:none}}
 </style>

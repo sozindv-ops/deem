@@ -2,22 +2,39 @@
 document.addEventListener('DOMContentLoaded', () => {
 
   /* photo loading: try local file first, fall back to the stock URL,
-     then to the textured placeholder. Fades in once something loads. */
+     then to the textured placeholder. Fades in once something loads.
+     A hard timeout backs up 'error' events: flaky/throttled mobile
+     connections often stall a request without ever firing 'error',
+     which used to leave the photo blank forever instead of degrading
+     to the placeholder. */
   const wireImg = (img) => {
-    const ok = () => img.classList.add('ok');
+    let timer = null;
+    const clearTimer = () => { if (timer) { clearTimeout(timer); timer = null; } };
+    const ok = () => { img.classList.add('ok'); clearTimer(); };
     const onErr = () => {
+      clearTimer();
       if (img.dataset.fallback) {           // swap to fallback source once
         const fb = img.dataset.fallback;
         delete img.dataset.fallback;
         img.src = fb;
+        armTimer();
       } else {
         img.remove();                         // reveal textured placeholder
       }
     };
-    if (img.complete && img.naturalWidth > 0) ok();
-    else {
-      img.addEventListener('load', ok);
-      img.addEventListener('error', onErr);
+    const armTimer = () => { clearTimer(); timer = setTimeout(onErr, 9000); };
+    if (img.complete && img.naturalWidth > 0) { ok(); return; }
+    img.addEventListener('load', ok);
+    img.addEventListener('error', onErr);
+    if (img.loading === 'lazy' && 'IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) { armTimer(); io.disconnect(); }
+        });
+      }, { rootMargin: '600px 0px' });
+      io.observe(img);
+    } else {
+      armTimer();
     }
   };
   document.querySelectorAll('.ph img, .hero-bg img, .page-hero-bg img, .cta-banner-bg img, .video-block img').forEach(wireImg);
