@@ -28,6 +28,12 @@
   --accent-line:  rgba(194,145,106,.35);
   --on-accent:    #17120d;
 
+  /* vivid gold — reserved for FX (beams/stars) and primary CTAs, brand "signal" color */
+  --gold:         #f0a94e;
+  --gold-2:       #ffd699;
+  --gold-deep:    #a85f22;
+  --gold-glow:    rgba(240,169,78,.55);
+
   --white:        #f5f0e7;
   --muted:        #a89e8f;
   --muted-2:      #726a5b;
@@ -101,17 +107,19 @@ section{position:relative}
 .tag-word{font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--accent);font-weight:600}
 .bg-cream .tag-word{color:#8a6640}
 
-/* ---------- buttons — small radius, editorial ---------- */
+/* ---------- buttons — clipped facet corner, editorial ---------- */
 .btn{
+  --clip:14px;
   position:relative;display:inline-flex;align-items:center;gap:10px;
   padding:16px 30px;font-size:11.5px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;
-  color:var(--white);background:transparent;border:1px solid var(--line-2);border-radius:var(--r-btn);
+  color:var(--white);background:transparent;border:1px solid var(--line-2);
+  clip-path:polygon(0 0,100% 0,100% calc(100% - var(--clip)),calc(100% - var(--clip)) 100%,0 100%);
   overflow:hidden;transition:color .4s var(--ease),border-color .4s var(--ease),transform .4s var(--ease);
   cursor:pointer;white-space:nowrap;isolation:isolate;
 }
 .btn>*{position:relative;z-index:2}
 .btn::before{
-  content:'';position:absolute;inset:0;z-index:-1;background:var(--white);border-radius:inherit;
+  content:'';position:absolute;inset:0;z-index:-1;background:var(--white);
   transform:scaleX(0);transform-origin:left;transition:transform .5s var(--ease);
 }
 .btn:hover,.btn:focus-visible{color:#111;border-color:var(--white);transform:translateY(-1px)}
@@ -119,13 +127,17 @@ section{position:relative}
 .btn .btn-arrow{transition:transform .45s var(--ease);font-family:var(--sans)}
 .btn:hover .btn-arrow{transform:translateX(5px)}
 
-.btn-gold{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+.btn-gold{
+  background:linear-gradient(135deg,var(--gold) 0%,var(--gold-deep) 100%);
+  color:var(--on-accent);border-color:transparent;
+  box-shadow:0 10px 30px -8px var(--gold-glow);
+}
 .btn-gold::before{background:var(--white)}
 .btn-gold:hover,.btn-gold:focus-visible{color:#111;border-color:var(--white)}
 .btn-ghost-dark{border-color:rgba(23,21,18,.3);color:var(--ink)}
 .btn-ghost-dark::before{background:var(--ink)}
 .btn-ghost-dark:hover{color:var(--cream)}
-.btn-sm{padding:12px 22px;font-size:10.5px}
+.btn-sm{padding:12px 22px;font-size:10.5px;--clip:11px}
 
 /* ---------- nav — flat editorial bar (no floating pill) ---------- */
 .nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:30px 0;border-bottom:1px solid transparent;transition:padding .4s var(--ease),background .4s var(--ease),border-color .4s var(--ease)}
@@ -193,7 +205,7 @@ section{position:relative}
 /* ---------- hero — full-bleed photo, bold bottom-anchored headline ---------- */
 .hero{min-height:100svh;display:flex;align-items:flex-end;position:relative;padding:170px 0 64px;overflow:hidden}
 .hero-bg{position:absolute;inset:0;z-index:0;background:var(--bg);overflow:hidden}
-.hero-bg img{width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1.3s var(--ease);filter:brightness(.6) saturate(.92);transform:scale(1.02)}
+.hero-bg img{width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1.3s var(--ease);filter:brightness(.3) saturate(.65);transform:scale(1.02)}
 .hero-bg img.ok{opacity:1;animation:kenburns 34s ease-in-out infinite alternate}
 @keyframes kenburns{from{transform:scale(1.02)}to{transform:scale(1.12)}}
 .hero-bg::before{content:'';position:absolute;inset:0;z-index:1;background:
@@ -222,10 +234,33 @@ section{position:relative}
 @keyframes dotFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-16px)}}
 @keyframes dotRing{0%{transform:scale(.4);opacity:.5}100%{transform:scale(1.6);opacity:0}}
 
+/* ---------- FX layer — black ground, faceted mesh, sweeping gold beams, stars
+   (injected by JS into hero-bg / page-hero-bg / cta-banner-bg containers) ---------- */
+.hero-fx{position:absolute;inset:0;z-index:2;pointer-events:none;overflow:hidden}
+.fx-ground{position:absolute;inset:0;background:
+  radial-gradient(60% 55% at 16% 8%,rgba(240,169,78,.16),transparent 62%),
+  radial-gradient(55% 60% at 100% 100%,rgba(240,169,78,.11),transparent 58%),
+  linear-gradient(152deg,#0c0a08 0%,#100e0b 55%,#0a0908 100%)}
+.fx-mesh{position:absolute;inset:-12%;opacity:.7;background-image:
+  linear-gradient(115deg,transparent 38%,rgba(255,255,255,.035) 50%,transparent 62%),
+  repeating-linear-gradient(55deg,rgba(255,255,255,.045) 0 1px,transparent 1px 78px),
+  repeating-linear-gradient(-48deg,rgba(255,255,255,.032) 0 1px,transparent 1px 112px)}
+.fx-beam{position:absolute;top:-30%;width:2px;height:170%;
+  background:linear-gradient(180deg,transparent 0%,var(--gold) 46%,var(--gold-2) 50%,var(--gold) 54%,transparent 100%);
+  box-shadow:0 0 30px 2px var(--gold-glow),0 0 74px 16px rgba(240,169,78,.14);
+  opacity:.85;will-change:transform}
+.fx-beam-1{left:70%;transform:rotate(19deg);animation:beamDrift1 17s ease-in-out infinite}
+.fx-beam-2{left:20%;height:140%;top:-15%;opacity:.4;transform:rotate(13deg);animation:beamDrift2 23s ease-in-out infinite}
+@keyframes beamDrift1{0%,100%{transform:rotate(16deg) translateX(0)}50%{transform:rotate(22deg) translateX(46px)}}
+@keyframes beamDrift2{0%,100%{transform:rotate(11deg) translateX(0)}50%{transform:rotate(8deg) translateX(-34px)}}
+.fx-star{position:absolute;border-radius:50%;background:var(--gold-2);box-shadow:0 0 6px 1px var(--gold-glow);animation:starTwinkle 3.6s ease-in-out infinite}
+@keyframes starTwinkle{0%,100%{opacity:.15;transform:scale(.7)}50%{opacity:1;transform:scale(1.15)}}
+@media (prefers-reduced-motion:reduce){.fx-beam,.fx-star{animation:none}}
+
 /* page hero (inner) */
 .page-hero{padding:190px 0 84px;position:relative;overflow:hidden}
 .page-hero-bg{position:absolute;inset:0;z-index:0;background:var(--bg);overflow:hidden}
-.page-hero-bg img{width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1s var(--ease);filter:brightness(.48) saturate(.9);transform:scale(1.02)}
+.page-hero-bg img{width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1s var(--ease);filter:brightness(.26) saturate(.65);transform:scale(1.02)}
 .page-hero-bg img.ok{opacity:1;animation:kenburns 30s ease-in-out infinite alternate}
 .page-hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(19,17,16,.48),rgba(19,17,16,.95))}
 .page-hero .container{position:relative;z-index:2}
@@ -406,13 +441,15 @@ article.post li:first-child{border-top:none}
 article.post li::before{content:'';position:absolute;left:2px;top:19px;width:6px;height:6px;border-radius:50%;background:var(--accent)}
 article.post blockquote{font-family:var(--serif);font-size:24px;font-style:italic;color:var(--accent);border-left:2px solid var(--accent);padding:6px 0 6px 28px;margin:40px 0;line-height:1.45}
 
-/* ---------- marquee ---------- */
+/* ---------- marquee — krytex-style tag ticker, × separators ---------- */
 .marquee-wrap{overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--bg)}
-.marquee{display:flex;white-space:nowrap;animation:marquee 38s linear infinite}
-.marquee span{padding:22px 0;font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted-2);display:flex;align-items:center;font-weight:600}
-.marquee span>span{padding:0 36px;display:flex;align-items:center}
-.marquee span>span::after{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent);margin-left:36px}
+.marquee{display:flex;white-space:nowrap;animation:marquee 32s linear infinite}
+.marquee:hover{animation-play-state:paused}
+.marquee span{padding:20px 0;font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:#cfc7b6;display:flex;align-items:center;font-weight:700}
+.marquee span>span{padding:0 30px;display:flex;align-items:center;gap:26px}
+.marquee span>span::after{content:'×';font-size:14px;font-weight:400;color:var(--gold);margin-left:26px}
 @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.hero .marquee-wrap{position:absolute;left:0;right:0;bottom:0;z-index:3;border-color:rgba(255,255,255,.14);border-bottom:none;background:linear-gradient(180deg,transparent,rgba(10,9,8,.55) 60%)}
 
 /* ---------- timeline ---------- */
 .tl{border-left:1px solid var(--line-2);margin-left:10px}
@@ -429,7 +466,7 @@ article.post blockquote{font-family:var(--serif);font-size:24px;font-style:itali
 /* ---------- cta banner ---------- */
 .cta-banner{position:relative;padding:120px 0;text-align:center;overflow:hidden}
 .cta-banner-bg{position:absolute;inset:0;z-index:0;background:var(--bg-alt);overflow:hidden}
-.cta-banner-bg img{width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1s;filter:brightness(.42);transform:scale(1.02)}
+.cta-banner-bg img{width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1s;filter:brightness(.26) saturate(.65);transform:scale(1.02)}
 .cta-banner-bg img.ok{opacity:1;animation:kenburns 32s ease-in-out infinite alternate}
 .cta-banner-bg::after{content:'';position:absolute;inset:0;background:radial-gradient(70% 90% at 50% 10%,rgba(194,145,106,.08),transparent 60%)}
 .cta-banner .container{position:relative;z-index:2}
@@ -626,15 +663,14 @@ article.post blockquote{font-family:var(--serif);font-size:24px;font-style:itali
       <div><strong>30&nbsp;<span class="ru-only">дней</span><span class="en-only">days</span></strong><span class="ru-only">Гарантия результата</span><span class="en-only">Result guarantee</span></div>
     </div>
   </div>
-</section>
-
-<!-- MARQUEE -->
-<div class="marquee-wrap bg-dark">
-  <div class="marquee">
-    <span><span>Рублёво-Успенское</span><span>Новорижское</span><span>Барвиха</span><span>Сколково</span><span>Серебряный Бор</span><span>Киевское шоссе</span><span>Рублёвское шоссе</span></span>
-    <span><span>Рублёво-Успенское</span><span>Новорижское</span><span>Барвиха</span><span>Сколково</span><span>Серебряный Бор</span><span>Киевское шоссе</span><span>Рублёвское шоссе</span></span>
+  <!-- MARQUEE — ticker strip pinned to the hero's bottom edge -->
+  <div class="marquee-wrap">
+    <div class="marquee">
+      <span><span>Рублёво-Успенское</span><span>Новорижское</span><span>Барвиха</span><span>Сколково</span><span>Серебряный Бор</span><span>Киевское шоссе</span><span>Рублёвское шоссе</span></span>
+      <span><span>Рублёво-Успенское</span><span>Новорижское</span><span>Барвиха</span><span>Сколково</span><span>Серебряный Бор</span><span>Киевское шоссе</span><span>Рублёвское шоссе</span></span>
+    </div>
   </div>
-</div>
+</section>
 
 <!-- PHILOSOPHY -->
 <section class="section bg-dark">
@@ -3082,8 +3118,33 @@ document.addEventListener('DOMContentLoaded', () => {
   };
   document.querySelectorAll('.ph img, .hero-bg img, .page-hero-bg img, .cta-banner-bg img, .video-block img').forEach(wireImg);
 
-  /* floating decorative markers drifting over hero photography */
+  /* black+gold FX layer — faceted mesh, sweeping beams, twinkling stars
+     (krytex.world-style motion, injected into every hero/page-hero/cta-banner
+     backdrop so no per-page markup edits were needed) */
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelectorAll('.hero-bg, .page-hero-bg, .cta-banner-bg').forEach((host) => {
+    const big = host.classList.contains('hero-bg');
+    const fx = document.createElement('div');
+    fx.className = 'hero-fx';
+    fx.innerHTML = '<div class="fx-ground"></div><div class="fx-mesh"></div>'
+      + '<div class="fx-beam fx-beam-1"></div><div class="fx-beam fx-beam-2"></div>';
+    const starCount = big ? 22 : 12;
+    for (let i = 0; i < starCount; i++) {
+      const star = document.createElement('span');
+      star.className = 'fx-star';
+      const size = (1 + Math.random() * 2.2).toFixed(1);
+      star.style.width = size + 'px';
+      star.style.height = size + 'px';
+      star.style.left = (Math.random() * 100).toFixed(1) + '%';
+      star.style.top = (Math.random() * 100).toFixed(1) + '%';
+      star.style.animationDelay = (Math.random() * 3.6).toFixed(2) + 's';
+      star.style.animationDuration = (2.6 + Math.random() * 2.6).toFixed(2) + 's';
+      fx.appendChild(star);
+    }
+    host.appendChild(fx);
+  });
+
+  /* floating decorative markers drifting over hero photography */
   if (!reduceMotion) {
     document.querySelectorAll('.hero-bg, .page-hero-bg').forEach((host) => {
       const count = host.classList.contains('page-hero-bg') ? 3 : 5;

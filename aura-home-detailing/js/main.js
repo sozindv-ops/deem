@@ -39,8 +39,33 @@ document.addEventListener('DOMContentLoaded', () => {
   };
   document.querySelectorAll('.ph img, .hero-bg img, .page-hero-bg img, .cta-banner-bg img, .video-block img').forEach(wireImg);
 
-  /* floating decorative markers drifting over hero photography */
+  /* black+gold FX layer — faceted mesh, sweeping beams, twinkling stars
+     (krytex.world-style motion, injected into every hero/page-hero/cta-banner
+     backdrop so no per-page markup edits were needed) */
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelectorAll('.hero-bg, .page-hero-bg, .cta-banner-bg').forEach((host) => {
+    const big = host.classList.contains('hero-bg');
+    const fx = document.createElement('div');
+    fx.className = 'hero-fx';
+    fx.innerHTML = '<div class="fx-ground"></div><div class="fx-mesh"></div>'
+      + '<div class="fx-beam fx-beam-1"></div><div class="fx-beam fx-beam-2"></div>';
+    const starCount = big ? 22 : 12;
+    for (let i = 0; i < starCount; i++) {
+      const star = document.createElement('span');
+      star.className = 'fx-star';
+      const size = (1 + Math.random() * 2.2).toFixed(1);
+      star.style.width = size + 'px';
+      star.style.height = size + 'px';
+      star.style.left = (Math.random() * 100).toFixed(1) + '%';
+      star.style.top = (Math.random() * 100).toFixed(1) + '%';
+      star.style.animationDelay = (Math.random() * 3.6).toFixed(2) + 's';
+      star.style.animationDuration = (2.6 + Math.random() * 2.6).toFixed(2) + 's';
+      fx.appendChild(star);
+    }
+    host.appendChild(fx);
+  });
+
+  /* floating decorative markers drifting over hero photography */
   if (!reduceMotion) {
     document.querySelectorAll('.hero-bg, .page-hero-bg').forEach((host) => {
       const count = host.classList.contains('page-hero-bg') ? 3 : 5;
